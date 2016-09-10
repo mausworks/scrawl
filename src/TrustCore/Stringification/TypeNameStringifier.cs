@@ -6,7 +6,7 @@
     public sealed class TypeNameStringifier : AnyTypeStringifier
     {
         /// <summary>
-        /// Stringifies the provided value by printing it's type name.
+        /// Stringifies the provided value by printing its type name.
         /// </summary>
         /// <param name="value">The value to stringify.</param>
         /// <returns>The provided <paramref name="value"/>'s type name.</returns>
