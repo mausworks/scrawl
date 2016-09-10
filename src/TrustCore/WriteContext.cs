@@ -20,31 +20,21 @@ namespace TrustCore
         /// <summary>
         /// This context's primary object stringifier.
         /// </summary>
-        public Stringifier PrimaryStringifier { get; }
-
-        /// <summary>
-        /// This context's surrogate stringifier, used when the primary stringifier cannot stringify a given type.
-        /// </summary>
-        public AnyTypeStringifier SurrogateStringifier { get; }
+        public Stringifier Stringifier { get; }
 
         /// <summary>
         /// Initializes a new <see cref="WriteContext"/> using the provided primary and surrogate stringifiers.
         /// </summary>
         /// <param name="primaryStringifier">The stringifier to use for object stringification. To use multiple stringifiers, use a <see cref="CompositeStringifier"/>. This parameter may not be null.</param>
         /// <param name="surrogateStringifier">The stringifier to use when the <paramref name="primaryStringifier"/> cannot stringify an object. This parameter may not be null.</param>
-        protected WriteContext(Stringifier primaryStringifier, AnyTypeStringifier surrogateStringifier)
+        protected WriteContext(Stringifier primaryStringifier)
         {
             if (primaryStringifier == null)
             {
                 throw new ArgumentNullException(nameof(primaryStringifier));
             }
-            if (surrogateStringifier == null)
-            {
-                throw new ArgumentException(nameof(surrogateStringifier));
-            }
-            
-            PrimaryStringifier = primaryStringifier;
-            SurrogateStringifier = surrogateStringifier;
+
+            Stringifier = primaryStringifier;
         }
 
         /// <summary>
@@ -102,15 +92,14 @@ namespace TrustCore
 
             var objectType = obj.GetType();
 
-            if (PrimaryStringifier.CanStringify(objectType))
+            if (Stringifier.CanStringify(objectType))
             {
-                Write(PrimaryStringifier.Stringify(obj));
+                Write(Stringifier.Stringify(obj));
 
                 return;
             }
 
-            // The surrogate stringifier must be used.
-            Write(SurrogateStringifier.Stringify(obj));
+            throw new NotSupportedException($"The provided object of the type '{objectType.Name}' could not be stringified. A stringifier has not been provided for the type.");
         }
     }
 }

@@ -7,7 +7,7 @@ namespace Trustyy
     public class ConsoleContext : WriteContext
     {
         public ConsoleContext(Stringifier stringifier)
-            : base(stringifier, new TypeNameStringifier())
+            : base(stringifier)
         {
 
         }

@@ -4,6 +4,7 @@ using TrustUI.Stringification;
 using TrustUI.Components;
 using System.Linq;
 using System.Collections.Generic;
+using TrustCore.Stringification;
 
 namespace Trustyy
 {
@@ -12,7 +13,10 @@ namespace Trustyy
         public static WriteContext ConsoleContext = new ConsoleContext(new CompositeStringifier(
                 new BooleanStringifier("yes", "no"),
                 new StructStringifier(),
-                new EnumerableConcatenator()));
+                new EnumerableConcatenator(),
+
+                // Add a AnyTypeStringifer at the end to handle unknown types.
+                new TypeNameStringifier()));
 
         public static void Main(string[] args)
         {

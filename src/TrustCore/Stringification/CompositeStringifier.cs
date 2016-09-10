@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using TrustCore.Internal;
 
-namespace TrustCore
+namespace TrustCore.Stringification
 {
     /// <summary>
     /// Allows for passing multiple stringifiers as a single stringifier.
@@ -37,12 +37,28 @@ namespace TrustCore
         /// Creates a new composite stringifier using the provided <paramref name="stringifiers"/> 
         /// and then seeds the underlaying lookup with the provided <paramref name="knownStringifiedTypes"/> for faster lookup.
         /// </summary>
-        /// <param name="stringifiers">The stringifiers to use in this composite.</param>
+        /// <param name="stringifiers">The stringifiers to use in this composite, may not be null.</param>
         /// <param name="knownStringifiedTypes">The types which are known to be stringified, if any of the provided types cannot be stringified a <see cref="InvalidOperationException"/> will be thrown.</param>
         public CompositeStringifier(IEnumerable<Stringifier> stringifiers, IEnumerable<Type> knownStringifiedTypes)
         {
+            if (stringifiers == null)
+            {
+                throw new ArgumentNullException(nameof(stringifiers));
+            }
+            if (knownStringifiedTypes == null)
+            {
+                throw new ArgumentNullException(nameof(knownStringifiedTypes));
+            }
+
+            var stringifiersList = stringifiers as IList<Stringifier> ?? stringifiers.ToList();
+
+            if (stringifiersList.Count == 0)
+            {
+                throw new ArgumentException("Must provide one ore more stringifiers.", nameof(stringifiers));
+            }
+
             // The "knownStringifiedTypes" is a bit leaky, but I must allow it.
-            StringifierLookup = new StringifierLookup(stringifiers, knownStringifiedTypes);
+            StringifierLookup = new StringifierLookup(stringifiersList, knownStringifiedTypes);
         }
 
 
@@ -55,7 +71,7 @@ namespace TrustCore
             => StringifierLookup.CanGetStringifier(type);
 
         /// <summary>
-        /// Stringifies the provided <paramref name="value"/> using the first known stringifier contained in this composite.
+        /// Stringifies the provided <paramref name="value"/> using the first known stringifier for the type.
         /// Throws if the provided <paramref name="value"/> cannot be stringified.
         /// </summary>
         /// <param name="value">The value to stringify.</param>
