@@ -1,4 +1,4 @@
-﻿namespace TrustCore.Stringification
+﻿namespace ScrawlCore.Stringification
 {
     /// <summary>
     /// Stringifies objects by returning an empty string. This stringifier can stringify any type.

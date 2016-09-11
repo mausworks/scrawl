@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TrustCore
+namespace ScrawlCore
 {
     /// <summary>
     /// An abstract class that denotes that a stringifier can stringify any type.

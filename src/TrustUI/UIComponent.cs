@@ -1,6 +1,6 @@
-﻿using TrustCore;
+﻿using ScrawlCore;
 
-namespace TrustUI
+namespace ScrawlUI
 {
     public interface UIComponent
     {

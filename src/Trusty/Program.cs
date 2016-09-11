@@ -1,12 +1,12 @@
 ﻿using System;
-using TrustCore;
-using TrustUI.Stringification;
-using TrustUI.Components;
+using ScrawlCore;
+using ScrawlUI.Stringification;
+using ScrawlUI.Components;
 using System.Linq;
 using System.Collections.Generic;
-using TrustCore.Stringification;
+using ScrawlCore.Stringification;
 
-namespace Trustyy
+namespace Scrawly
 {
     public class Program
     {

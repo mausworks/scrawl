@@ -1,6 +1,6 @@
-﻿using TrustCore;
+﻿using ScrawlCore;
 
-namespace TrustUI.Stringification
+namespace ScrawlUI.Stringification
 {
     /// <summary>
     /// Defines the options for a concatenator.

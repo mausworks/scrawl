@@ -1,4 +1,4 @@
-﻿namespace TrustCore
+﻿namespace ScrawlCore
 {
     /// <summary>
     /// An interface which defines the functionality of scrawling.

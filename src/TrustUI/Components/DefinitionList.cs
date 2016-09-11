@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Linq;
 using System.Reflection;
-using TrustCore;
+using ScrawlCore;
 
-namespace TrustUI.Components
+namespace ScrawlUI.Components
 {
     public class DefinitionList<TModel> : UIComponent
     {

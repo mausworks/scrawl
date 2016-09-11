@@ -1,7 +1,7 @@
 ﻿using System;
-using TrustCore;
+using ScrawlCore;
 
-namespace Trustyy
+namespace Scrawly
 {
     /// <summary>
     /// A scrawler that implements <see cref="Console.Write(string)"/>.

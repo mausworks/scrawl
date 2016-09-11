@@ -1,4 +1,4 @@
-﻿namespace TrustCore.Stringification
+﻿namespace ScrawlCore.Stringification
 {
     /// <summary>
     /// Stringifies objects by invoking <see cref="object.ToString()"/> on it. This stringifier can stringify any type.

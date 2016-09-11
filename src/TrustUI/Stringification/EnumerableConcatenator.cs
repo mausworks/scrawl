@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TrustUI.Stringification
+namespace ScrawlUI.Stringification
 {
     /// <summary>
     /// Provides methods for stringifying <see cref="IEnumerable"/>'s with simple types, such as value-type arrays.

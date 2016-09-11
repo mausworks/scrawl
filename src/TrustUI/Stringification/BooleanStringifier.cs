@@ -1,7 +1,7 @@
 ﻿using System;
-using TrustCore;
+using ScrawlCore;
 
-namespace TrustUI.Stringification
+namespace ScrawlUI.Stringification
 {
     /// <summary>
     /// Provides methods for stringifying boolean values.

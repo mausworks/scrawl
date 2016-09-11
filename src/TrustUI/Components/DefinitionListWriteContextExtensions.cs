@@ -1,7 +1,7 @@
 ﻿using System.Linq;
-using TrustCore;
+using ScrawlCore;
 
-namespace TrustUI.Components
+namespace ScrawlUI.Components
 {
 	/// <summary>
     /// Contains extensions of the write context for the definition list component.

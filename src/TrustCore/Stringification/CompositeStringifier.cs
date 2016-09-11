@@ -1,9 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using TrustCore.Internal;
+using ScrawlCore.Internal;
 
-namespace TrustCore.Stringification
+namespace ScrawlCore.Stringification
 {
     /// <summary>
     /// Allows for passing multiple stringifiers as a single stringifier.

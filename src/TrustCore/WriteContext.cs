@@ -1,6 +1,6 @@
 ﻿using System;
 
-namespace TrustCore
+namespace ScrawlCore
 {
     /// <summary>
     /// This class provides a context for writing. It combines scrawling and stringification into a nice hot soup.

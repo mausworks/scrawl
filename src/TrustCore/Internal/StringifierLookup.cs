@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace TrustCore.Internal
+namespace ScrawlCore.Internal
 {
     /// <summary>
     /// A class that looks up stringifiers from types.

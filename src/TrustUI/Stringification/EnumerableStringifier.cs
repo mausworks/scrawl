@@ -3,9 +3,9 @@ using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Reflection;
-using TrustCore;
+using ScrawlCore;
 
-namespace TrustUI.Stringification
+namespace ScrawlUI.Stringification
 {
     /// <summary>
     /// Provides base methods for stringifying <see cref="IEnumerable"/>'s.
