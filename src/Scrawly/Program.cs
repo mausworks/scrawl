@@ -5,6 +5,7 @@ using ScrawlUI.Components;
 using System.Linq;
 using System.Collections.Generic;
 using ScrawlCore.Stringification;
+using ScrawlUI;
 
 namespace Scrawly
 {
@@ -22,7 +23,7 @@ namespace Scrawly
         {
             var now = DateTime.Now;
 
-            ConsoleContext.WriteDefinitionList(new
+            var dl = CreateDefinitionList(new
             {
                 Title = "Welcome!",
                 Description = "This is a definition list test!",
@@ -35,8 +36,27 @@ namespace Scrawly
                 UnknownObject = ConsoleContext
             });
 
+            var container = new Container(dl)
+            {
+                Bordered = true,
+                Padding = new Offset(1, 2),
+                Margin = new Offset(0, 2)
+            };
+
+            var secondContainer = new Container(container)
+            {
+                Bordered = true,
+                Margin = new Offset(1, 4)
+            };
+
+            secondContainer.Write(ConsoleContext);
+
+
             Console.ReadLine();
         }
+
+        private static DefinitionList<TModel> CreateDefinitionList<TModel>(TModel model)
+            => new DefinitionList<TModel>(model);
 
         private static IEnumerable<int> Primes(int n) => Enumerable.Range(2, int.MaxValue - 1)
             .Where(candidate => Enumerable.Range(2, (int)Math.Sqrt(candidate))

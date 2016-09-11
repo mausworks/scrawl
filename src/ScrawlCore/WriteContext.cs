@@ -3,7 +3,7 @@
 namespace ScrawlCore
 {
     /// <summary>
-    /// This class provides a context for writing. It combines scrawling and stringification into a nice hot soup.
+    /// This class provides methods for writing objects and strings to a <see cref="Scrawler"/>.
     /// </summary>
     public class WriteContext
     {
@@ -31,20 +31,20 @@ namespace ScrawlCore
         /// Initializes a new <see cref="WriteContext"/> using the provided primary and surrogate stringifiers.
         /// </summary>
         /// <param name="scrawler">The scrawler to use for writing. This parameter may not be null.</param>
-        /// <param name="primaryStringifier">The stringifier to use for object stringification. To use multiple stringifiers, use a <see cref="CompositeStringifier"/>. This parameter may not be null.</param>
-        public WriteContext(Scrawler scrawler, Stringifier primaryStringifier)
+        /// <param name="stringifier">The stringifier to use for object stringification. To use multiple stringifiers, use a <see cref="CompositeStringifier"/>. This parameter may not be null.</param>
+        public WriteContext(Scrawler scrawler, Stringifier stringifier)
         {
             if (scrawler == null)
             {
                 throw new ArgumentNullException(nameof(scrawler));
             }
-            if (primaryStringifier == null)
+            if (stringifier == null)
             {
-                throw new ArgumentNullException(nameof(primaryStringifier));
+                throw new ArgumentNullException(nameof(stringifier));
             }
 
             Scrawler = scrawler;
-            Stringifier = primaryStringifier;
+            Stringifier = stringifier;
         }
 
         /// <summary>

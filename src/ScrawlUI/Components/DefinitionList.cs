@@ -26,13 +26,10 @@ namespace ScrawlUI.Components
         {
             var properties = ModelType.GetProperties();
             var longestPropertyName = properties.Max(p => p.Name.Length);
-            var padWidth = longestPropertyName;
-
+            
             foreach (var property in properties)
             {
-                var dt = property.Name.PadRight(padWidth);
-
-                context.Write($"{dt} : ");
+                context.Write($"{property.Name.PadRight(longestPropertyName)} : ");
                 context.WriteObject(property.GetValue(Model));
                 context.NewLine();
             }
