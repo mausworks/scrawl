@@ -10,7 +10,7 @@ namespace Trustyy
 {
     public class Program
     {
-        public static WriteContext ConsoleContext = new ConsoleContext(new CompositeStringifier(
+        public static WriteContext ConsoleContext = new WriteContext(new ConsoleScrawler(), new CompositeStringifier(
                 new BooleanStringifier("yes", "no"),
                 new StructStringifier(),
                 new EnumerableConcatenator(),

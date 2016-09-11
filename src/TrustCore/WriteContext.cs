@@ -3,17 +3,17 @@
 namespace TrustCore
 {
     /// <summary>
-    /// Provides a context for writing. 
+    /// This class provides a context for writing. It combines scrawling and stringification into a nice hot soup.
     /// </summary>
-    public abstract class WriteContext
+    public class WriteContext
     {
         /// <summary>
-        /// The symbol used instead of empty values for null references. Set to "&lt;null&gt;" by default.
+        /// The symbol to write instead of empty values for null references. Set to "&lt;null&gt;" by default, but may be overridden.
         /// </summary>
         public virtual string NullSymbol { get; set; } = "<null>";
 
         /// <summary>
-        /// The symbol used for terminating lines. Set to <see cref="Environment.NewLine"/> by default.
+        /// The symbol used for terminating lines. Set to <see cref="Environment.NewLine"/> by default, but may be overidden.
         /// </summary>
         public virtual string LineTerminator { get; set; } = Environment.NewLine;
 
@@ -23,17 +23,27 @@ namespace TrustCore
         public Stringifier Stringifier { get; }
 
         /// <summary>
+        /// This context's scrawler, tasked with writing.
+        /// </summary>
+        public Scrawler Scrawler { get; }
+
+        /// <summary>
         /// Initializes a new <see cref="WriteContext"/> using the provided primary and surrogate stringifiers.
         /// </summary>
+        /// <param name="scrawler">The scrawler to use for writing. This parameter may not be null.</param>
         /// <param name="primaryStringifier">The stringifier to use for object stringification. To use multiple stringifiers, use a <see cref="CompositeStringifier"/>. This parameter may not be null.</param>
-        /// <param name="surrogateStringifier">The stringifier to use when the <paramref name="primaryStringifier"/> cannot stringify an object. This parameter may not be null.</param>
-        protected WriteContext(Stringifier primaryStringifier)
+        public WriteContext(Scrawler scrawler, Stringifier primaryStringifier)
         {
+            if (scrawler == null)
+            {
+                throw new ArgumentNullException(nameof(scrawler));
+            }
             if (primaryStringifier == null)
             {
                 throw new ArgumentNullException(nameof(primaryStringifier));
             }
 
+            Scrawler = scrawler;
             Stringifier = primaryStringifier;
         }
 
@@ -41,7 +51,8 @@ namespace TrustCore
         /// When overridden in a derived class, writes the provided <paramref name="value"/> to a source.
         /// </summary>
         /// <param name="value"></param>
-        public abstract void Write(string value);
+        public virtual void Write(string value)
+            => Scrawler.Write(value);
 
         /// <summary>
         /// Writes the provided value followed by this context's line terminator using <see cref="Write(string)"/>.
