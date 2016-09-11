@@ -13,7 +13,7 @@ namespace ScrawlCore.Stringification
         /// <summary>
         /// The lookup used to look up stringifiers from types.
         /// </summary>
-        public readonly StringifierLookup StringifierLookup;
+        public StringifierLookup StringifierLookup { get; }
      
         /// <summary>
         /// Creates a new composite stringifier using the provided <paramref name="stringifiers"/>.

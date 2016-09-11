@@ -1,13 +1,16 @@
 {
   "version": "1.0.0",
-  "description": "An example application for ScrawlUI",
+  "description": "Tests for ScrawlCore",
   "buildOptions": {
     "debugType": "portable",
-    "emitEntryPoint": true
+    "emitEntryPoint": false
   },
+  "testRunner": "xunit",
   "dependencies": {
     "ScrawlCore": "1.0.0-*",
-    "ScrawlUI": "*"
+    "xunit": "2.1.0",
+    "dotnet-test-xunit": "2.2.0-preview2-build1029",
+    "Moq": "4.6.38-alpha"
   },
   "frameworks": {
     "netcoreapp1.0": {

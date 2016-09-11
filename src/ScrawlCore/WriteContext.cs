@@ -13,7 +13,7 @@ namespace ScrawlCore
         public virtual string NullSymbol { get; set; } = "<null>";
 
         /// <summary>
-        /// The symbol used for terminating lines. Set to <see cref="Environment.NewLine"/> by default, but may be overidden.
+        /// The symbol used for terminating lines. Set to <see cref="Environment.NewLine"/> by default, but may be overridden.
         /// </summary>
         public virtual string LineTerminator { get; set; } = Environment.NewLine;
 
@@ -89,7 +89,7 @@ namespace ScrawlCore
 
                 return;
             }
-
+            
             var str = obj as string;
 
             if (str != null)
