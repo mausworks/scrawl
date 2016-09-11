@@ -3,11 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 14
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ScrawlCore", "src\TrustCore\ScrawlCore.xproj", "{8FB0DBE2-FA67-4E47-B8D4-A5144EE6C6C0}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ScrawlCore", "src\ScrawlCore\ScrawlCore.xproj", "{8FB0DBE2-FA67-4E47-B8D4-A5144EE6C6C0}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ScrawlUI", "src\TrustUI\ScrawlUI.xproj", "{03AA5202-4380-4341-B3F5-7D9249AFD473}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "ScrawlUI", "src\ScrawlUI\ScrawlUI.xproj", "{03AA5202-4380-4341-B3F5-7D9249AFD473}"
 EndProject
-Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Scrawly", "src\Trusty\Scrawly.xproj", "{095095C1-5E83-4B8D-9927-3DD8871B6715}"
+Project("{8BB2217D-0F2D-49D1-97BC-3654ED321F3B}") = "Scrawly", "src\Scrawly\Scrawly.xproj", "{095095C1-5E83-4B8D-9927-3DD8871B6715}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

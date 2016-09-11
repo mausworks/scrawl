@@ -6,7 +6,8 @@
     "emitEntryPoint": true
   },
   "dependencies": {
-    "TrustUI": "*"
+    "ScrawlCore": "1.0.0-*",
+    "ScrawlUI": "*"
   },
   "frameworks": {
     "netcoreapp1.0": {

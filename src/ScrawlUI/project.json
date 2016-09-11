@@ -3,7 +3,7 @@
 
   "dependencies": {
     "NETStandard.Library": "1.6.0",
-    "TrustCore": "1.0.0-*"
+    "ScrawlCore": "*"
   },
 
   "frameworks": {
