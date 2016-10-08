@@ -8,17 +8,17 @@ namespace ScrawlCore
     public interface Stringifier
     {
         /// <summary>
-        /// Determines whether the provided <paramref name="type"/> can be stringified by this stringifier.
+        /// Determines whether the provided <paramref name="type"/> can be stringified.
         /// </summary>
-        /// <param name="type">The type to evaluate, may never be null.</param>
-        /// <returns><c>true</c> if the provided type can be stringified using this stringifier, otherwise <c>false</c>.</returns>
+        /// <param name="type">The type to evaluate.</param>
+        /// <returns><c>true</c> if the provided type can be stringified, otherwise <c>false</c>.</returns>
         bool CanStringify(Type type);
 
         /// <summary>
-        /// Stringifies the provided <paramref name="value"/>, may throw exceptions.
+        /// Stringifies the provided <paramref name="value"/>.
         /// </summary>
-        /// <param name="value">The value to stringify, may never be null.</param>
-        /// <returns>A stringified version of the provided <paramref name="value"/>, if successful.</returns>
+        /// <param name="value">The value to stringify.</param>
+        /// <returns>The stringified version of the provided <paramref name="value"/>.</returns>
         string Stringify(object value);
     }
 }

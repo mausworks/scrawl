@@ -2,7 +2,7 @@
 {
     /// <summary>
     /// An interface which defines the functionality of scrawling.
-    /// <para>Scrawl [verb]: write (something) in a hurried, careless way.</para>
+    /// <para>Scrawl [verb]: write (something) in a hurried, (careless) way.</para>
     /// </summary>
     public interface Scrawler
     {

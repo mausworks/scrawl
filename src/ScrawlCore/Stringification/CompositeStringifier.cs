@@ -10,9 +10,6 @@ namespace ScrawlCore.Stringification
     /// </summary>
     public class CompositeStringifier : Stringifier
     {
-        /// <summary>
-        /// The lookup used to look up stringifiers from types.
-        /// </summary>
         public StringifierLookup StringifierLookup { get; }
      
         /// <summary>
@@ -57,7 +54,7 @@ namespace ScrawlCore.Stringification
                 throw new ArgumentException("Must provide one ore more stringifiers.", nameof(stringifiers));
             }
 
-            // The "knownStringifiedTypes" is a bit leaky, but I must allow it.
+            // Leaky...
             StringifierLookup = new StringifierLookup(stringifiersList, knownStringifiedTypes);
         }
 
