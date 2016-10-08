@@ -95,6 +95,40 @@ namespace ScrawlCore.Internal
         }
 
         /// <summary>
+        /// Pretty much does what it says on the tin.
+        /// </summary>
+        /// <param name="type">The type (key) to add to the known stringifiers.</param>
+        /// <param name="stringifier">The stringifier (value) to add to the known stringifiers.</param>
+        private void AddToKnownStringifiersOrThrow(Type type, Stringifier stringifier)
+        {
+            try
+            {
+                _knownStringifiers.Add(type, stringifier);
+            }
+            catch (ArgumentException ex)
+            {
+                throw new InvalidOperationException($"A stringifier for the type '{type}' has already been added.", ex);
+            }
+        }
+
+        /// <summary>
+        /// Pretty much does what it says on the tin.
+        /// </summary>
+        /// <param name="type">The type to lookup.</param>
+        private Stringifier FindStringifierForTypeOrThrow(Type type)
+        {
+            try
+            {
+                return _stringifiers.First(s => s.CanStringify(type));
+            }
+            catch (InvalidOperationException ex)
+            {
+                throw new InvalidOperationException(
+                    $"A stringifier for the type '{type.FullName}' has not been provided.", ex);
+            }
+        }
+
+        /// <summary>
         /// Seeds the "known stringifiers" dictionary from the provided types.
         /// </summary>
         /// <param name="seedTypes">The types to seed the dictionary with.</param>
@@ -115,23 +149,6 @@ namespace ScrawlCore.Internal
             }
         }
         
-        /// <summary>
-        /// Pretty much does what it says on the tin.
-        /// </summary>
-        /// <param name="type">The type (key) to add to the known stringifiers.</param>
-        /// <param name="stringifier">The stringifier (value) to add to the known stringifiers.</param>
-        private void AddToKnownStringifiersOrThrow(Type type, Stringifier stringifier)
-        {
-            try
-            {
-                _knownStringifiers.Add(type, stringifier);
-            }
-            catch (ArgumentException ex)
-            {
-                throw new InvalidOperationException($"A stringifier for the type '{type}' has already been added.", ex);
-            }
-        }
-
         /// <summary>
         /// Gets a vague (some would say rough) estimate of how many items should be in the <see cref="_knownStringifiers"/> dictionary.
         /// <para>Roughly calculated from the provided <paramref name="seedTypesCount"/> or the _stringifiers count.</para>
@@ -181,23 +198,6 @@ namespace ScrawlCore.Internal
             // So, to take this into consideration, we just add X to the formula.
             // I let X be 8 for now.
             return (int)Math.Round((_stringifiers.Count * 1.2f) + 8);
-        }
-
-        /// <summary>
-        /// Pretty much does what it says on the tin.
-        /// </summary>
-        /// <param name="type">The type to lookup.</param>
-        private Stringifier FindStringifierForTypeOrThrow(Type type)
-        {
-            try
-            {
-                return _stringifiers.First(s => s.CanStringify(type));
-            }
-            catch (InvalidOperationException ex)
-            {
-                throw new InvalidOperationException(
-                    $"A stringifier for the type '{type.FullName}' has not been provided.", ex);
-            }
         }
     }
 }
