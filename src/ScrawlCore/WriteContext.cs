@@ -3,7 +3,7 @@
 namespace ScrawlCore
 {
     /// <summary>
-    /// This class provides methods for writing objects and strings to a <see cref="Scrawler"/>.
+    /// Provides helper methods for writing to a <see cref="ScrawlCore.Scrawler"/>.
     /// </summary>
     public class WriteContext
     {
@@ -18,33 +18,22 @@ namespace ScrawlCore
         public virtual string LineTerminator { get; set; } = Environment.NewLine;
 
         /// <summary>
-        /// This context's primary object stringifier.
-        /// </summary>
-        public Stringifier Stringifier { get; }
-
-        /// <summary>
         /// This context's scrawler, tasked with writing.
         /// </summary>
         public Scrawler Scrawler { get; }
 
         /// <summary>
-        /// Initializes a new <see cref="WriteContext"/> using the provided primary and surrogate stringifiers.
+        /// Creates a new write context which contains helper methods for writing to a <see cref="Scrawler"/>.
         /// </summary>
-        /// <param name="scrawler">The scrawler to use for writing. This parameter may not be null.</param>
-        /// <param name="stringifier">The stringifier to use for object stringification. To use multiple stringifiers, use a <see cref="CompositeStringifier"/>. This parameter may not be null.</param>
-        public WriteContext(Scrawler scrawler, Stringifier stringifier)
+        /// <param name="scrawler">The scrawler to write to.</param>
+        public WriteContext(Scrawler scrawler)
         {
             if (scrawler == null)
             {
                 throw new ArgumentNullException(nameof(scrawler));
             }
-            if (stringifier == null)
-            {
-                throw new ArgumentNullException(nameof(stringifier));
-            }
-
+            
             Scrawler = scrawler;
-            Stringifier = stringifier;
         }
 
         /// <summary>
@@ -53,7 +42,7 @@ namespace ScrawlCore
         /// <param name="value"></param>
         public virtual void Write(string value)
             => Scrawler.Write(value);
-
+        
         /// <summary>
         /// Writes the provided value followed by this context's line terminator using <see cref="Write(string)"/>.
         /// </summary>
@@ -75,42 +64,5 @@ namespace ScrawlCore
         /// </summary>
         public virtual void WriteNull()
             => Write(NullSymbol);
-
-        /// <summary>
-        /// Writes the provided object using <see cref="Write(string)"/> by first stringifying the provided object using this context's primary or surrogate stringifier.
-        /// If null is passed; this context's null symbol will be written instead 
-        /// </summary>
-        /// <param name="obj">The object to stringify and write, may be null.</param>
-        public virtual void WriteObject(object obj)
-        {
-            if (obj == null)
-            {
-                WriteNull();
-
-                return;
-            }
-            
-            var str = obj as string;
-
-            if (str != null)
-            {
-                // Strings are directly written to the context.
-                // No need for stringification.
-                Write(str);
-
-                return;
-            }
-
-            var objectType = obj.GetType();
-
-            if (Stringifier.CanStringify(objectType))
-            {
-                Write(Stringifier.Stringify(obj));
-
-                return;
-            }
-
-            throw new NotSupportedException($"The provided object of the type '{objectType.Name}' could not be stringified. A stringifier has not been provided for the type.");
-        }
     }
 }
