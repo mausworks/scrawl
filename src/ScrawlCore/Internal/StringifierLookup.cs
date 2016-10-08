@@ -64,8 +64,7 @@ namespace ScrawlCore.Internal
             {
                 throw new ArgumentNullException(nameof(type), "Cannot lookup stringifier of <null> type.");
             }
-
-            // The provided type may be a known unstringifiable type.
+            
             if (_unstringifiableTypes.Contains(type))
             {
                 return false;
@@ -73,19 +72,15 @@ namespace ScrawlCore.Internal
 
             if (!_knownStringifiers.ContainsKey(type))
             {
-                // This is not a previously known type.
-                // we must do a linear search for it.
                 var stringifier = _stringifiers.FirstOrDefault(sf => sf.CanStringify(type));
 
                 if (stringifier != null)
                 {
-                    // We take the opportunity to seed here as well.
                     AddToKnownStringifiersOrThrow(type, stringifier);
 
                     return true;
                 }
-
-                // Type was not stringifiable - add to hash set of unstringifiable types.
+                
                 _unstringifiableTypes.Add(type);
 
                 return false;
