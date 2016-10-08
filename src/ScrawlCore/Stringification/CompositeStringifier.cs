@@ -47,15 +47,16 @@ namespace ScrawlCore.Stringification
                 throw new ArgumentNullException(nameof(knownStringifiedTypes));
             }
 
-            var stringifiersList = stringifiers as IList<Stringifier> ?? stringifiers.ToList();
+            var stringifierList = stringifiers as IList<Stringifier> 
+                ?? stringifiers.ToList();
 
-            if (stringifiersList.Count == 0)
+            if (stringifierList.Count == 0)
             {
                 throw new ArgumentException("Must provide one ore more stringifiers.", nameof(stringifiers));
             }
 
             // Leaky...
-            StringifierLookup = new StringifierLookup(stringifiersList, knownStringifiedTypes);
+            StringifierLookup = new StringifierLookup(stringifierList, knownStringifiedTypes);
         }
 
 
