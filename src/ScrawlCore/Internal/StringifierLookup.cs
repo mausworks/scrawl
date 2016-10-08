@@ -149,11 +149,9 @@ namespace ScrawlCore.Internal
                 // When passing in the known seed types, the implementer probably
                 // has a rough idea of how many types that will realistically be stringified during runtime.
                 // - But nobody is perfect, so we multiply it by a magic number.
-                // 1.2 looks nice, doesn't it?
                 return (int)Math.Round(seedTypesCount * 1.2f);
             }
 
-            // There will not be a one-to-one relationship between types and stringifiers.
             // The _knownStringifiers will contain multiple values that are references to the same stringifier.
             // 
             // For example:
@@ -193,11 +191,10 @@ namespace ScrawlCore.Internal
         {
             try
             {
-                return _stringifiers.First();
+                return _stringifiers.First(s => s.CanStringify(type));
             }
             catch (InvalidOperationException ex)
             {
-                // Wrap the invalid operation exception in an exception with a friendlier message.
                 throw new InvalidOperationException(
                     $"A stringifier for the type '{type.FullName}' has not been provided.", ex);
             }
