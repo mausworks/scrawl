@@ -20,7 +20,25 @@ namespace ScrawlCore.Test
 
         [Fact]
         public void CreateWithNullKnownTypes_ThrowsArgumentNullException()
-            => Throws<ArgumentNullException>(() => new CompositeStringifier(new[] { new NoopStringifier() }, null));
+            => Throws<ArgumentNullException>(() => new CompositeStringifier(new[] { new NullStringifier() }, null));
+
+        [Fact]
+        public void Create_ThrowsInvalidOperationExceptionIfCantSeed()
+        {
+            var stringifierMock = new Mock<Stringifier>();
+
+            stringifierMock.Setup(m => m.CanStringify(It.IsAny<Type>()))
+                .Returns(false);
+
+            var stringifiers = new[]
+            {
+                stringifierMock.Object
+            };
+
+            var knownTypes = new[] { typeof(object) };
+
+            Throws<InvalidOperationException>(() => new CompositeStringifier(stringifiers, knownTypes));
+        }
 
         [Fact]
         public void Stringifies_UsingChildStringifier()

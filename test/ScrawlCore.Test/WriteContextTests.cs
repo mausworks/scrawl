@@ -1,5 +1,4 @@
 ﻿using Moq;
-using ScrawlCore.Stringification;
 using System;
 using Xunit;
 
@@ -9,28 +8,45 @@ namespace ScrawlCore.Test
 {
     public class WriteContextTests
     {
+        public const string TestWord = "anything";
+
         [Fact]
         public void CreateWithNullScrawler_ThrowsArgumentNullException()
-            => Throws<ArgumentNullException>(() => new WriteContext(null, new NoopStringifier()));
+            => Throws<ArgumentNullException>(() => new WriteContext(null));
         
         [Fact]
         public void CreateWithNullStringifier_ThrowsArgumentNullException()
-            => Throws<ArgumentNullException>(() => new WriteContext(new Mock<Scrawler>().Object, null));
+            => Throws<ArgumentNullException>(() => new ObjectWriteContext(new Mock<Scrawler>().Object, null));
 
         [Fact]
         public void Write_WritesToScrawler()
         {
             var scrawlerMock = new Mock<Scrawler>();
-            var stringifier = new NoopStringifier();
+            var context = new WriteContext(scrawlerMock.Object);
 
-            var context = new WriteContext(scrawlerMock.Object, stringifier);
-
-            const string testWord = "anything";
-
-            scrawlerMock.Setup(s => s.Write(testWord))
+            scrawlerMock.Setup(s => s.Write(TestWord))
                 .Verifiable();
             
-            context.Write(testWord);
+            context.Write(TestWord);
+
+            scrawlerMock.Verify();
+        }
+
+        [Fact]
+        public void WriteWithNullRef_WritesNullRefToScrawler()
+        {
+            // Writing a null reference to the context should
+            // not write the context's null symbol, but rather a null reference.
+            // This might seem a bit "offensive" at first,
+            // but isn't really. Implementations must be specific for when to write the null
+            // symbol and when to write null references, using either Write(null) or WriteNull()
+            var scrawlerMock = new Mock<Scrawler>();
+            var context = new WriteContext(scrawlerMock.Object);
+
+            scrawlerMock.Setup(s => s.Write(null))
+                .Verifiable();
+
+            context.Write(null);
 
             scrawlerMock.Verify();
         }
@@ -39,58 +55,26 @@ namespace ScrawlCore.Test
         public void WriteLine_WritesToScrawler()
         {
             var scrawlerMock = new Mock<Scrawler>();
-            var stringifier = new NoopStringifier();
+            var context = new WriteContext(scrawlerMock.Object);
 
-            var context = new WriteContext(scrawlerMock.Object, stringifier);
-
-            var testWord = "anything";
-            
             var result = string.Empty;
 
             scrawlerMock.Setup(s => s.Write(It.IsAny<string>()))
                 .Callback<string>(s => result += s)
                 .Verifiable();
 
-            context.WriteLine(testWord);
+            context.WriteLine(TestWord);
 
             scrawlerMock.Verify();
 
-            Equal($"{testWord}{context.LineTerminator}", result);
-        }
-
-        [Fact]
-        public void WriteObject_WritesToScrawler()
-        {
-            var scrawlerMock = new Mock<Scrawler>();
-            var stringifier = new NoopStringifier();
-
-            var context = new WriteContext(scrawlerMock.Object, stringifier);
-
-            // We could check s.Write(string.Empty), 
-            // but that's not the point of this test.
-            scrawlerMock.Setup(s => s.Write(It.IsAny<string>()))
-                .Verifiable();
-                
-            var tester = new
-            {
-                Name = "Earl",
-                Occupation = "Tester",
-                Age = (DateTime.UtcNow - new DateTime(1970, 1, 1, 10, 0, 0, DateTimeKind.Utc)).Days / 365,
-                Assignment = "Getting written"
-            };
-
-            context.WriteObject(tester);
-
-            scrawlerMock.Verify();
+            Equal($"{TestWord}{context.LineTerminator}", result);
         }
 
         [Fact]
         public void WriteNull_WritesDefaultNullSymbolToScrawler()
         {
             var scrawlerMock = new Mock<Scrawler>();
-            var stringifier = new NoopStringifier();
-
-            var context = new WriteContext(scrawlerMock.Object, stringifier);
+            var context = new WriteContext(scrawlerMock.Object);
             
             scrawlerMock.Setup(s => s.Write(context.NullSymbol))
                 .Verifiable();
@@ -105,9 +89,7 @@ namespace ScrawlCore.Test
         public void NewLine_WritesDefaultLineTerminatorToScrawler()
         {
             var scrawlerMock = new Mock<Scrawler>();
-            var stringifier = new NoopStringifier();
-
-            var context = new WriteContext(scrawlerMock.Object, stringifier);
+            var context = new WriteContext(scrawlerMock.Object);
 
             scrawlerMock.Setup(s => s.Write(context.LineTerminator))
                 .Verifiable();
@@ -121,12 +103,14 @@ namespace ScrawlCore.Test
         [Theory]
         [InlineData("<null>")]
         [InlineData("NIL")]
+
+        // Having null as null symbol should be perfectly valid.
+        [InlineData(null)] 
         public void WriteNull_WritesNullSymbolToScrawler(string nullSymbol)
         {
             var scrawlerMock = new Mock<Scrawler>();
-            var stringifier = new NoopStringifier();
+            var context = new WriteContext(scrawlerMock.Object);
 
-            var context = new WriteContext(scrawlerMock.Object, stringifier);
             context.NullSymbol = nullSymbol;
 
             scrawlerMock.Setup(s => s.Write(nullSymbol))
@@ -137,16 +121,15 @@ namespace ScrawlCore.Test
             Equal(nullSymbol, context.NullSymbol);
             scrawlerMock.Verify();
         }
-
+        
         [Theory]
         [InlineData("\r\n")]
         [InlineData("\n")]
         public void NewLine_WritesToScrawler(string lineTerminator)
         {
             var scrawlerMock = new Mock<Scrawler>();
-            var stringifier = new NoopStringifier();
+            var context = new WriteContext(scrawlerMock.Object);
 
-            var context = new WriteContext(scrawlerMock.Object, stringifier);
             context.LineTerminator = lineTerminator;
 
             scrawlerMock.Setup(s => s.Write(lineTerminator))
