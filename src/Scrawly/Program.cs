@@ -11,7 +11,7 @@ namespace Scrawly
 {
     public class Program
     {
-        public static WriteContext ConsoleContext = new WriteContext(new ConsoleScrawler(), new CompositeStringifier(
+        public static ObjectWriteContext ConsoleContext = new ObjectWriteContext(new ConsoleScrawler(), new CompositeStringifier(
                 new BooleanStringifier("yes", "no"),
                 new StructStringifier(),
                 new EnumerableConcatenator(),
@@ -23,7 +23,7 @@ namespace Scrawly
         {
             var now = DateTime.Now;
 
-            var dl = CreateDefinitionList(new
+            var foo = new
             {
                 Title = "Welcome!",
                 Description = "This is a definition list test!",
@@ -34,7 +34,9 @@ namespace Scrawly
                 FalseToken = false,
                 Primes = Primes(10),
                 UnknownObject = ConsoleContext
-            });
+            };
+
+            var dl = CreateDefinitionList(foo);
 
             var container = new Container(dl)
             {
@@ -49,14 +51,19 @@ namespace Scrawly
                 Margin = new Offset(1, 4)
             };
 
-            secondContainer.Write(ConsoleContext);
+            var thirdContainer = new Container(secondContainer)
+            {
+                Bordered = true,
+                Margin = new Offset(1, 4)
+            };
 
-
+            thirdContainer.Write(ConsoleContext);
+            
             Console.ReadLine();
         }
 
-        private static DefinitionList<TModel> CreateDefinitionList<TModel>(TModel model)
-            => new DefinitionList<TModel>(model);
+        private static DefinitionList CreateDefinitionList(object model)
+            => new DefinitionList(model);
 
         private static IEnumerable<int> Primes(int n) => Enumerable.Range(2, int.MaxValue - 1)
             .Where(candidate => Enumerable.Range(2, (int)Math.Sqrt(candidate))

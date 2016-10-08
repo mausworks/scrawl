@@ -1,7 +1,7 @@
 ﻿using System;
 using ScrawlCore;
 
-namespace ScrawlUI
+namespace ScrawlUI.Components
 {
     public class Container : UIComponent
     {
@@ -23,7 +23,7 @@ namespace ScrawlUI
             InnerComponent = innerComponent;
         }
         
-        private void WriteTopCap(WriteContext context, int longestLineLength)
+        private void WriteTopCap(ObjectWriteContext context, int longestLineLength)
         {
             for (var i = 0; i < Margin.Top; i++)
             {
@@ -41,7 +41,7 @@ namespace ScrawlUI
             }
         }
 
-        private void WriteBottomCap(WriteContext context, int contentLength)
+        private void WriteBottomCap(ObjectWriteContext context, int contentLength)
         {
             for (var i = 0; i < Padding.Bottom; i++)
             {
@@ -60,7 +60,7 @@ namespace ScrawlUI
             }
         }
 
-        private void WriteHorizontalBorder(WriteContext context, int contentLength)
+        private void WriteHorizontalBorder(ObjectWriteContext context, int contentLength)
         {
             if (Bordered)
             {
@@ -80,7 +80,7 @@ namespace ScrawlUI
             }
         }
         
-        public void WriteVerticalBorder(WriteContext context, int paddingLeft, int paddingRight)
+        public void WriteVerticalBorder(ObjectWriteContext context, int paddingLeft, int paddingRight)
         {
             if (paddingLeft > 0)
             {
@@ -98,7 +98,7 @@ namespace ScrawlUI
             }
         }
 
-        public void Write(WriteContext context)
+        public void Write(ObjectWriteContext context)
         {
             var proxy = new ProxyScrawler();
             var proxiedContext = context.CreateSubContext(proxy);

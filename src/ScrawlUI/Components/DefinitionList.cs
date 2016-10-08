@@ -5,13 +5,13 @@ using ScrawlCore;
 
 namespace ScrawlUI.Components
 {
-    public class DefinitionList<TModel> : UIComponent
+    public class DefinitionList : UIComponent
     {
         public TypeInfo ModelType { get; }
 
-        public TModel Model { get; }
+        public object Model { get; }
 
-        public DefinitionList(TModel model)
+        public DefinitionList(object model)
         {
             if (model == null)
             {
@@ -19,10 +19,10 @@ namespace ScrawlUI.Components
             }
             
             Model = model;
-            ModelType = typeof(TModel).GetTypeInfo();
+            ModelType = model.GetType().GetTypeInfo();
         }
 
-        public void Write(WriteContext context)
+        public void Write(ObjectWriteContext context)
         {
             var properties = ModelType.GetProperties();
             var longestPropertyName = properties.Max(p => p.Name.Length);

@@ -14,9 +14,9 @@ namespace ScrawlUI.Components
         /// <typeparam name="TModel">The type of the model.</typeparam>
         /// <param name="writeContext">The context to write the list to.</param>
         /// <param name="model">The model to create a list from.</param>
-        public static void WriteDefinitionList<TModel>(this WriteContext writeContext, TModel model)
+        public static void WriteDefinitionList(this ObjectWriteContext writeContext, object model)
         {
-            var definitionList = new DefinitionList<TModel>(model);
+            var definitionList = new DefinitionList(model);
             definitionList.Write(writeContext);
         }
     }

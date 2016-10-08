@@ -4,6 +4,6 @@ namespace ScrawlUI
 {
     public interface UIComponent
     {
-        void Write(WriteContext context);
+        void Write(ObjectWriteContext context);
     }
 }
