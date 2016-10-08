@@ -38,7 +38,7 @@ namespace ScrawlCore.Internal
         {
             _stringifiers = stringifiers as List<Stringifier> ?? stringifiers.ToList();
             
-            SeedKnownStringifiers(knownStringifiedTypes as List<Type> ?? knownStringifiedTypes.ToList());
+            SeedKnownStringifiers(knownStringifiedTypes as ICollection<Type> ?? knownStringifiedTypes.ToList());
 
             _unstringifiableTypes = new HashSet<Type>();
         }
