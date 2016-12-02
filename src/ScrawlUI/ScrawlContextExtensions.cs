@@ -9,7 +9,6 @@ namespace ScrawlUI
         /// </summary>
         /// <param name="context">The context to create a sub context from.</param>
         /// <param name="subscrawler">The scrawler to use in the sub context.</param>
-        /// <returns></returns>
         public static SubWriteContext CreateSubContext(this ObjectWriteContext context, Scrawler subscrawler)
             => new SubWriteContext(subscrawler, context);
     }

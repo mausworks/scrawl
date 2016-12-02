@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -30,6 +31,12 @@ namespace ScrawlUI.Stringification
             : base(options.ElementStringifier)
         {
             Options = options;
+        }
+
+        public EnumerableConcatenator(Action<ConcatenatorOptions> config)
+           : this(new ConcatenatorOptions())
+        {
+            config(Options);
         }
 
         /// <summary>

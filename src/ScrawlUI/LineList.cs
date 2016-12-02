@@ -11,8 +11,6 @@ namespace ScrawlUI
 
         private List<string> _innerList;
 
-        private object _modifyLock = new object();
-
         public LineList(int capacity)
         {
             _innerList = new List<string>(capacity);
@@ -25,11 +23,8 @@ namespace ScrawlUI
         public void AddLine(string line)
         {
             LongestLineLength = Math.Max(line.Length, LongestLineLength);
-            
-            lock (_modifyLock)
-            {
-                _innerList.Add(line);
-            }
+
+            _innerList.Add(line);
         }
 
         /// <summary>
@@ -38,11 +33,8 @@ namespace ScrawlUI
         /// <param name="padding">The number of padding characters to add.</param>
         public void LeftPad(int padding)
         {
-            lock (_modifyLock)
-            {
-                _innerList = _innerList.Select(s => s.PadLeft(padding))
-                    .ToList();
-            }
+            _innerList = _innerList.Select(s => s.PadLeft(padding))
+                .ToList();   
         }
 
         /// <summary>
@@ -51,11 +43,8 @@ namespace ScrawlUI
         /// <param name="padding">The number of padding characters to add.</param>
         public void RightPad(int padding)
         {
-            lock (_modifyLock)
-            {
-                _innerList = _innerList.Select(s => s.PadRight(padding))
-                    .ToList();
-            }
+            _innerList = _innerList.Select(s => s.PadRight(padding))
+                .ToList();
         }
 
         public string this[int index] 

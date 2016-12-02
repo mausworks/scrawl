@@ -100,8 +100,8 @@ namespace ScrawlUI.Components
 
         public void Write(ObjectWriteContext context)
         {
-            var proxy = new ProxyScrawler();
-            var proxiedContext = context.CreateSubContext(proxy);
+            var buildScrawler = new ProxyScrawler();
+            var proxiedContext = context.CreateSubContext(buildScrawler);
             
             var isTerminated = false;
             var isLineTerminator = false;
@@ -112,7 +112,7 @@ namespace ScrawlUI.Components
             string currentLine = string.Empty;
 
             // Setup on write method for the proxy.
-            proxy.OnWrite(s =>
+            buildScrawler.OnWrite(s =>
             {
                 var len = s.Length;
 

@@ -65,7 +65,7 @@ namespace ScrawlCore.Internal
                 throw new ArgumentNullException(nameof(type), "Cannot lookup stringifier of <null> type.");
             }
             
-            if (_unstringifiableTypes.Contains(type))
+            if (IsKnownUnstringifiableType(type))
             {
                 return false;
             }
@@ -88,6 +88,9 @@ namespace ScrawlCore.Internal
 
             return true;
         }
+
+        private bool IsKnownUnstringifiableType(Type type)
+            => _unstringifiableTypes.Contains(type);
 
         /// <summary>
         /// Pretty much does what it says on the tin.
